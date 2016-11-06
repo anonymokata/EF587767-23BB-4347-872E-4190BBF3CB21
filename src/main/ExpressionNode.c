@@ -10,48 +10,62 @@ struct ExpressionNode {
 };
 
 ExpressionNode *new_expression_node(char value, NodeType type) {
-    ExpressionNode *token = malloc(sizeof(ExpressionNode));
+    ExpressionNode *node = malloc(sizeof(ExpressionNode));
 
-    if (token) {
-        token->type = type;
-        token->value = value;
+    if (node) {
+        node->type = type;
+        node->value = value;
+
+        node->left = NULL;
+        node->right = NULL;
     }
 
-    return token;
+    return node;
 }
 
-void free_expression_node(ExpressionNode *token) {
-    if (token->left) {
-        free(token->left);
+void free_expression_node(ExpressionNode *node) {
+    if (node->left) {
+        free(node->left);
     }
-    if (token->right) {
-        free(token->right);
+    if (node->right) {
+        free(node->right);
     }
-    free(token);
+    free(node);
 }
 
-NodeType get_type(ExpressionNode *token) {
-    return token->type;
+NodeType get_type(ExpressionNode *node) {
+    return node->type;
 }
 
-char get_value(ExpressionNode *token) {
-    return token->value;
+char get_value(ExpressionNode *node) {
+    return node->value;
 }
 
 ExpressionNode *get_left_node(ExpressionNode *node) {
     return node->left;
 }
 
-void set_left_node(ExpressionNode *root_node, ExpressionNode *left_node) {
-    root_node->left = left_node;
+void set_left_node(ExpressionNode *parent_node, ExpressionNode *left_node) {
+    parent_node->left = left_node;
 }
 
 ExpressionNode *get_right_node(ExpressionNode *node) {
     return node->right;
 }
 
-void set_right_node(ExpressionNode *root_node, ExpressionNode *right_node) {
-    root_node->right = right_node;
+void set_right_node(ExpressionNode *parent_node, ExpressionNode *right_node) {
+    parent_node->right = right_node;
+}
+
+int get_node_count(ExpressionNode *node) {
+    int count = 0;
+    if (node->left) {
+        count += get_node_count(node->left);
+    }
+    if (node->right) {
+        count += get_node_count(node->right);
+    }
+    return count + 1;
 }
 
 

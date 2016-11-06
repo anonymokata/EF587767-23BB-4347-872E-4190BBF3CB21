@@ -24,4 +24,5 @@ build: librpn_calc.a
 
 clean:
 	rm -f *.o
+	rm -f *.a
 .PHONY : clean

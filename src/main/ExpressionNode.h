@@ -1,5 +1,5 @@
-#ifndef RPNCALC_EXPRESSIONTOKEN_H
-#define RPNCALC_EXPRESSIONTOKEN_H
+#ifndef RPNCALC_EXPRESSIONNODE_H
+#define RPNCALC_EXPRESSIONNODE_H
 
 typedef struct ExpressionNode ExpressionNode;
 
@@ -17,10 +17,12 @@ char get_value(ExpressionNode *node);
 
 ExpressionNode *get_left_node(ExpressionNode *node);
 
-void set_left_node(ExpressionNode *left_node, ExpressionNode *root_node);
+void set_left_node(ExpressionNode *parent_node, ExpressionNode *left_node);
 
 ExpressionNode *get_right_node(ExpressionNode *node);
 
-void set_right_node(ExpressionNode *right_node, ExpressionNode *root_node);
+void set_right_node(ExpressionNode *parent_node, ExpressionNode *right_node);
+
+int get_node_count(ExpressionNode *node);
 
 #endif

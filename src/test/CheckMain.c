@@ -7,6 +7,8 @@ int main() {
     Suite *suite = notation_conversion();
     SRunner *srunner = srunner_create(suite);
 
+    srunner_add_suite(srunner, expression_node());
+
     srunner_run_all(srunner, CK_NORMAL);
     int num_failed = srunner_ntests_failed(srunner);
     srunner_free(srunner);

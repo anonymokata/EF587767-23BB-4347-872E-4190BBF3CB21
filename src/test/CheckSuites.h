@@ -5,4 +5,6 @@
 
 Suite *notation_conversion();
 
+Suite *expression_node();
+
 #endif

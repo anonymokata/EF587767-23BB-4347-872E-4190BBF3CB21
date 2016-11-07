@@ -11,9 +11,9 @@ ExpressionNode *new_expression_node(char value, NodeType type);
 
 void free_expression_node(ExpressionNode *node);
 
-NodeType get_type(ExpressionNode *node);
+NodeType get_node_type(ExpressionNode *node);
 
-char get_value(ExpressionNode *node);
+char get_node_value(ExpressionNode *node);
 
 ExpressionNode *get_left_node(ExpressionNode *node);
 

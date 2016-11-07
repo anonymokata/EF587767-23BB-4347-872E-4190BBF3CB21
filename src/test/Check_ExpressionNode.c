@@ -9,8 +9,8 @@ START_TEST(test_expression_node_create_1)
         NodeType type = VARIABLE;
         ExpressionNode *expression_node = new_expression_node(c, type);
 
-        ck_assert_int_eq(c, get_value(expression_node));
-        ck_assert_int_eq(type, get_type(expression_node));
+        ck_assert_int_eq(c, get_node_value(expression_node));
+        ck_assert_int_eq(type, get_node_type(expression_node));
 
         free_expression_node(expression_node);
     }
@@ -22,8 +22,8 @@ START_TEST(test_expression_node_create_2)
         NodeType type = OPERATOR;
         ExpressionNode *expression_node = new_expression_node(c, type);
 
-        ck_assert_int_eq(c, get_value(expression_node));
-        ck_assert_int_eq(type, get_type(expression_node));
+        ck_assert_int_eq(c, get_node_value(expression_node));
+        ck_assert_int_eq(type, get_node_type(expression_node));
 
         free_expression_node(expression_node);
     }

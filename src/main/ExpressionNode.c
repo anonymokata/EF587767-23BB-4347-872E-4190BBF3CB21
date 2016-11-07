@@ -33,11 +33,11 @@ void free_expression_node(ExpressionNode *node) {
     free(node);
 }
 
-NodeType get_type(ExpressionNode *node) {
+NodeType get_node_type(ExpressionNode *node) {
     return node->type;
 }
 
-char get_value(ExpressionNode *node) {
+char get_node_value(ExpressionNode *node) {
     return node->value;
 }
 

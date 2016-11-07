@@ -1,6 +1,5 @@
 #include <check.h>
 #include <ExpressionTree.h>
-#include <ExpressionNode.h>
 
 #include "CheckSuites.h"
 
@@ -22,8 +21,20 @@ START_TEST(test_expression_tree_add_node_to_empty_tree)
         add_node(tree, value);
 
         ExpressionNode *root = get_root(tree);
-        ck_assert_int_eq(value, get_value(root));
-        ck_assert_int_eq(VARIABLE, get_type(root));
+        ck_assert_int_eq(value, get_node_value(root));
+        ck_assert_int_eq(VARIABLE, get_node_type(root));
+
+        free_expression_tree(tree);
+
+
+        value = '+';
+
+        tree = new_expression_tree();
+        add_node(tree, value);
+
+        root = get_root(tree);
+        ck_assert_int_eq(value, get_node_value(root));
+        ck_assert_int_eq(OPERATOR, get_node_type(root));
 
         free_expression_tree(tree);
     }

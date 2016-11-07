@@ -2,18 +2,21 @@
 <module type="CPP_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src/main/main.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/NotationConversion.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/NotationConversion.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/ExpressionTree.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/ExpressionNode.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/ExpressionTree.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/NotationConversion.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/main.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/NotationConversion.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/ExpressionNode.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/CMakeLists.txt" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/CheckSuites.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/CMakeLists.txt" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/Check_NotationConversion.c" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/CheckMain.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/Check_ExpressionNode.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/Check_ExpressionTree.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/CheckSuites.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/CheckMain.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/Check_NotationConversion.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeModules/FindCheck.cmake" isTestSource="false" />
     </content>

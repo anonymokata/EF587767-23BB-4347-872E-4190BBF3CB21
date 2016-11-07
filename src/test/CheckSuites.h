@@ -7,4 +7,6 @@ Suite *notation_conversion();
 
 Suite *expression_node();
 
+Suite *expression_tree();
+
 #endif

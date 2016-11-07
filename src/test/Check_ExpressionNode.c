@@ -96,6 +96,7 @@ START_TEST(test_get_node_count_2)
     }
 END_TEST
 
+
 Suite *expression_node() {
     Suite *suite;
     TCase *tcase_core;

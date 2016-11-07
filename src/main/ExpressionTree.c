@@ -36,6 +36,10 @@ ExpressionNode *get_root(ExpressionTree *tree) {
     return tree->root;
 }
 
+int get_tree_size(ExpressionTree *tree) {
+    return get_node_count(tree->root);
+}
+
 
 NodeType calculate_node_type(const char value) {
     if (value == '+') {

@@ -13,4 +13,6 @@ void add_node(ExpressionTree *tree, const char value);
 
 ExpressionNode *get_root(ExpressionTree *tree);
 
+int get_tree_size(ExpressionTree *tree);
+
 #endif

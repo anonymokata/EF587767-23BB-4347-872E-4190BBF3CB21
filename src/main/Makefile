@@ -9,10 +9,14 @@ default: build
 ExpressionNode.c.o: ExpressionNode.c
 	$(CC) $(C_FLAGS) -o $@ -c $^
 
+ExpressionTree.c.o: ExpressionTree.c
+	$(CC) $(C_FLAGS) -o $@ -c $^
+
 NotationConversion.c.o: NotationConversion.c
 	$(CC) $(C_FLAGS) -o $@ -c $^
 
 librpn_calc.a: ExpressionNode.c.o
+librpn_calc.a: ExpressionTree.c.o
 librpn_calc.a: NotationConversion.c.o
 	rm -f $@
 	ar qc $@ $^

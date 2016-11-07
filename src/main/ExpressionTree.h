@@ -15,4 +15,6 @@ ExpressionNode *get_root(ExpressionTree *tree);
 
 int get_tree_size(ExpressionTree *tree);
 
+void print_post_order(ExpressionTree *tree, char *buffer);
+
 #endif

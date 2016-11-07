@@ -53,6 +53,22 @@ START_TEST(test_expression_tree_size)
     }
 END_TEST
 
+START_TEST(test_expression_tree_print_post_order_1)
+    {
+        char result[3];
+        ExpressionTree *tree = new_expression_tree();
+        add_node(tree, 'a');
+        add_node(tree, '+');
+        add_node(tree, 'b');
+
+        print_post_order(tree, result);
+
+        ck_assert_str_eq("ab+", result);
+
+        free_expression_tree(tree);
+    }
+END_TEST
+
 
 Suite *expression_tree() {
     Suite *suite;
@@ -65,6 +81,7 @@ Suite *expression_tree() {
     tcase_add_test(tcase_core, test_expression_tree_create);
     tcase_add_test(tcase_core, test_expression_tree_add_node_to_empty_tree);
     tcase_add_test(tcase_core, test_expression_tree_size);
+    tcase_add_test(tcase_core, test_expression_tree_print_post_order_1);
 
     suite_add_tcase(suite, tcase_core);
 

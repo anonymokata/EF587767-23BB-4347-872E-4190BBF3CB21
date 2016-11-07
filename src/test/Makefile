@@ -34,5 +34,5 @@ build: test_rpn
 
 clean:
 	rm -f *.o
-	rm -f test_rpn
+	rm -rf test_rpn*
 .PHONY : clean

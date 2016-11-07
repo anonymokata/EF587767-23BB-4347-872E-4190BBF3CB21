@@ -16,4 +16,6 @@ void convert_to_rpn(const char *infix, char *rpn_buffer, size_t buffer_size) {
     result[buffer_size] = '\0';
 
     strncpy(rpn_buffer, result, buffer_size);
+
+    free_expression_tree(tree);
 }

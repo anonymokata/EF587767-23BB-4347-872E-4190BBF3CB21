@@ -18,7 +18,7 @@ END_TEST
 
 START_TEST(test_converts_infix_addition_2)
     {
-        char result[3];
+        char result[5];
 
         const char expected_rpn[] = "cb+f+";
         const char infix[] = "c+b+f";

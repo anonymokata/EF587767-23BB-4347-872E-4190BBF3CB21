@@ -1,32 +1,34 @@
+SOURCE_DIR = ../main
+BUILD_DIR = ../../build
+
 C_FLAGS =  -Wall -Werror
-C_INCLUDES = -I../src
 
 
 default: build
 
 .PHONY : default
 
-ExpressionNode.c.o: ExpressionNode.c
+$(BUILD_DIR)/main/ExpressionNode.c.o: ExpressionNode.c
 	$(CC) $(C_FLAGS) -o $@ -c $^
 
-ExpressionTree.c.o: ExpressionTree.c
+$(BUILD_DIR)/main/ExpressionTree.c.o: ExpressionTree.c
 	$(CC) $(C_FLAGS) -o $@ -c $^
 
-NotationConversion.c.o: NotationConversion.c
+$(BUILD_DIR)/main/NotationConversion.c.o: NotationConversion.c
 	$(CC) $(C_FLAGS) -o $@ -c $^
 
-librpn_calc.a: ExpressionNode.c.o
-librpn_calc.a: ExpressionTree.c.o
-librpn_calc.a: NotationConversion.c.o
+$(BUILD_DIR)/main/librpn_calc.a: $(BUILD_DIR)/main/ExpressionNode.c.o
+$(BUILD_DIR)/main/librpn_calc.a: $(BUILD_DIR)/main/ExpressionTree.c.o
+$(BUILD_DIR)/main/librpn_calc.a: $(BUILD_DIR)/main/NotationConversion.c.o
 	rm -f $@
 	ar qc $@ $^
 
-build: librpn_calc.a
+build: $(BUILD_DIR)/main/librpn_calc.a
 
 .PHONY : build
 
 
 clean:
-	rm -f *.o
-	rm -f *.a
+	rm -rf $(BUILD_DIR)/main/*.o
+	rm -rf $(BUILD_DIR)/main/*.a
 .PHONY : clean

@@ -1,21 +1,28 @@
+BUILD_DIR = build
+
+
 default: all
 
 .PHONY : default
 
 
-all: clean rpn_calc test_rpn
-	src/test/test_rpn
+all: clean build_main build_test
+	$(BUILD_DIR)/test/test_rpn
+.PHONY : all
+
+mem_test: clean build_main build_test
+	CK_FORK=no valgrind --trace-children=yes --leak-check=full $(BUILD_DIR)/test/test_rpn
 .PHONY : all
 
 
-rpn_calc:
+build_main:
 	$(MAKE) -C src/main
-.PHONY : rpn_calc
+.PHONY : build_main
 
 
-test_rpn:
+build_test:
 	$(MAKE) -C src/test
-.PHONY : test_rpn
+.PHONY : build_test
 
 
 clean:

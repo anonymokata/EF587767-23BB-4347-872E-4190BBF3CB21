@@ -1,4 +1,5 @@
-SOURCE_DIR = ../main/
+SOURCE_DIR = ../main
+BUILD_DIR = ../../build
 
 C_FLAGS =  -Wall -Werror
 C_INCLUDES = -I$(SOURCE_DIR)
@@ -9,30 +10,30 @@ default: build
 .PHONY : default
 
 
-Check_ExpressionNode.c.o: Check_ExpressionNode.c
+$(BUILD_DIR)/test/Check_ExpressionNode.c.o: Check_ExpressionNode.c
 	$(CC) $(C_FLAGS) $(C_INCLUDES) -o $@ -c $^
 
-Check_ExpressionTree.c.o: Check_ExpressionTree.c
+$(BUILD_DIR)/test/Check_ExpressionTree.c.o: Check_ExpressionTree.c
 	$(CC) $(C_FLAGS) $(C_INCLUDES) -o $@ -c $^
 
-Check_NotationConversion.c.o: Check_NotationConversion.c
+$(BUILD_DIR)/test/Check_NotationConversion.c.o: Check_NotationConversion.c
 	$(CC) $(C_FLAGS) $(C_INCLUDES) -o $@ -c $^
 
-CheckMain.c.o: CheckMain.c
+$(BUILD_DIR)/test/CheckMain.c.o: CheckMain.c
 	$(CC) $(C_FLAGS) -o $@ -c $^
 
-test_rpn: Check_ExpressionNode.c.o
-test_rpn: Check_ExpressionTree.c.o
-test_rpn: Check_NotationConversion.c.o
-test_rpn: CheckMain.c.o
-	$(CC) $(C_FLAGS) $^ -o $@ `pkg-config --libs check` $(SOURCE_DIR)librpn_calc.a
+$(BUILD_DIR)/test/test_rpn: $(BUILD_DIR)/test/Check_ExpressionNode.c.o
+$(BUILD_DIR)/test/test_rpn: $(BUILD_DIR)/test/Check_ExpressionTree.c.o
+$(BUILD_DIR)/test/test_rpn: $(BUILD_DIR)/test/Check_NotationConversion.c.o
+$(BUILD_DIR)/test/test_rpn: $(BUILD_DIR)/test/CheckMain.c.o
+	$(CC) $(C_FLAGS) $^ -o $@ `pkg-config --libs check` $(BUILD_DIR)/main/librpn_calc.a
 
-build: test_rpn
+build: $(BUILD_DIR)/test/test_rpn
 
 .PHONY : build
 
 
 clean:
-	rm -f *.o
-	rm -rf test_rpn*
+	rm -rf $(BUILD_DIR)/test/*.o
+	rm -rf $(BUILD_DIR)/test/test_rpn*
 .PHONY : clean

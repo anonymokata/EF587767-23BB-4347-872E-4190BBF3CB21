@@ -1,0 +1,9 @@
+version: '2'
+services:
+  rpn-calc:
+    build:
+      context: ./
+    container_name: rpn-calc
+    image: tchupp/ubuntu-c
+    volumes:
+      - ../../:/home/dev/

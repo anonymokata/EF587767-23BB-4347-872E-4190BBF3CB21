@@ -1,4 +1,7 @@
 BUILD_DIR = build
+CURRENT_DIR = $(shell basename $(CURDIR))
+IMAGE_NAME = rpn-kata
+CONTAINER_NAME = ubuntu-c
 
 
 default: all
@@ -29,3 +32,7 @@ clean:
 	$(MAKE) -C src/main clean
 	$(MAKE) -C src/test clean
 .PHONY : clean
+
+docker:
+	@docker-compose -f src/docker/test-app.yml up --build
+.PHONY : docker

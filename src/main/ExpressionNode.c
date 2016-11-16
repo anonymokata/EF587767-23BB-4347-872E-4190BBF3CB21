@@ -25,10 +25,10 @@ ExpressionNode *new_expression_node(char value, NodeType type) {
 
 void free_expression_node(ExpressionNode *node) {
     if (node->left) {
-        free(node->left);
+        free_expression_node(node->left);
     }
     if (node->right) {
-        free(node->right);
+        free_expression_node(node->right);
     }
     free(node);
 }

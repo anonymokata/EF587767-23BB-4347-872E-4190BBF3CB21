@@ -21,7 +21,7 @@ ExpressionTree *new_expression_tree() {
 }
 
 void free_expression_tree(ExpressionTree *tree) {
-    if (tree->root != NULL) {
+    if (tree->root) {
         free_expression_node(tree->root);
     }
 

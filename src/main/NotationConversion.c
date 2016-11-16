@@ -8,7 +8,8 @@ void convert_to_rpn(const char *infix, char *rpn_buffer, size_t buffer_size) {
     char result[buffer_size + 1];
     ExpressionTree *tree = new_expression_tree();
 
-    for (int i = 0; i < strlen(infix); ++i) {
+    int i;
+    for (i = 0; i < strlen(infix); ++i) {
         add_node(tree, infix[i]);
     }
 

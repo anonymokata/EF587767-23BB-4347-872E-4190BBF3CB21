@@ -1,20 +1,27 @@
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "ExpressionTree.h"
 
 struct ExpressionTree {
     ExpressionNode *root;
+    ExpressionNode *last;
 };
 
 NodeType calculate_node_type(const char i);
 
 void traverse_tree_post_order(ExpressionNode *node, char **buffer);
 
+bool is_new_operator_higher_precedence(ExpressionNode *pNode, ExpressionNode *pExpressionNode);
+
+int operator_precedence(ExpressionNode *node);
+
 ExpressionTree *new_expression_tree() {
     ExpressionTree *tree = malloc(sizeof(ExpressionTree));
 
     if (tree) {
         tree->root = NULL;
+        tree->last = NULL;
     }
 
     return tree;
@@ -33,16 +40,48 @@ void add_node(ExpressionTree *tree, const char value) {
     ExpressionNode *new_node = new_expression_node(value, type);
 
     if (!tree->root) {
-        tree->root = new_node;
+        if (type == OPERATOR) {
+            tree->root = new_node;
+            set_left_node(new_node, tree->last);
+        }
+        tree->last = new_node;
         return;
     }
 
     if (type == OPERATOR) {
-        ExpressionNode *old_root = tree->root;
-        tree->root = new_node;
-        set_left_node(tree->root, old_root);
+        if (is_new_operator_higher_precedence(tree->root, new_node)) {
+            set_left_node(new_node, get_right_node(tree->root));
+            set_right_node(tree->root, new_node);
+        } else {
+            ExpressionNode *old_root = tree->root;
+            tree->root = new_node;
+            set_left_node(tree->root, old_root);
+        }
     } else {
-        set_right_node(tree->root, new_node);
+        set_right_node(tree->last, new_node);
+    }
+
+    tree->last = new_node;
+}
+
+bool is_new_operator_higher_precedence(ExpressionNode *root_node, ExpressionNode *new_node) {
+    if (get_node_type(root_node) == OPERATOR && get_node_type(new_node) == OPERATOR) {
+        if (operator_precedence(new_node) > operator_precedence(root_node)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int operator_precedence(ExpressionNode *node) {
+    const char operator = get_node_value(node);
+    switch (operator) {
+        case '+':
+            return 1;
+        case '-':
+            return 2;
+        default:
+            return 0;
     }
 }
 

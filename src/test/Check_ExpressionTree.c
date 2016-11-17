@@ -21,8 +21,7 @@ START_TEST(test_expression_tree_add_node_to_empty_tree)
         add_node(tree, value);
 
         ExpressionNode *root = get_root(tree);
-        ck_assert_int_eq(value, get_node_value(root));
-        ck_assert_int_eq(VARIABLE, get_node_type(root));
+        ck_assert_ptr_eq(NULL, root);
 
         free_expression_tree(tree);
 
@@ -109,6 +108,26 @@ START_TEST(test_expression_tree_print_post_order_addition_subtraction)
     }
 END_TEST
 
+START_TEST(test_expression_tree_order_of_ops_addition_subtraction)
+    {
+        const char *expected_rpn = "abc-+";
+        char result[5];
+
+        ExpressionTree *tree = new_expression_tree();
+        add_node(tree, 'a');
+        add_node(tree, '+');
+        add_node(tree, 'b');
+        add_node(tree, '-');
+        add_node(tree, 'c');
+
+        print_post_order(tree, result);
+
+        ck_assert_str_eq(expected_rpn, result);
+
+        free_expression_tree(tree);
+    }
+END_TEST
+
 
 Suite *expression_tree() {
     Suite *suite;
@@ -124,6 +143,7 @@ Suite *expression_tree() {
     tcase_add_test(tcase_core, test_expression_tree_print_post_order_addition);
     tcase_add_test(tcase_core, test_expression_tree_print_post_order_subtraction);
     tcase_add_test(tcase_core, test_expression_tree_print_post_order_addition_subtraction);
+    tcase_add_test(tcase_core, test_expression_tree_order_of_ops_addition_subtraction);
 
     suite_add_tcase(suite, tcase_core);
 

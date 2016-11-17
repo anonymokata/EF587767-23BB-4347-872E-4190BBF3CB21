@@ -47,7 +47,7 @@ void add_node(ExpressionTree *tree, const char value) {
 }
 
 NodeType calculate_node_type(const char value) {
-    if (value == '+') {
+    if (value == '+' || value == '-') {
         return OPERATOR;
     }
     return VARIABLE;

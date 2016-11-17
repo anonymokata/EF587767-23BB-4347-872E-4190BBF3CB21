@@ -4,13 +4,13 @@
 #include "ExpressionTree.h"
 
 struct ExpressionTree {
-    ExpressionNode *root;
     ExpressionNode *last;
+    ExpressionNode *root;
 };
 
 NodeType calculate_node_type(const char i);
 
-void traverse_tree_post_order(ExpressionNode *node, char **buffer);
+void traverse_tree_post_order(ExpressionNode *node, char *buffer, int *pos);
 
 bool is_new_operator_higher_precedence(ExpressionNode *pNode, ExpressionNode *pExpressionNode);
 
@@ -20,16 +20,21 @@ ExpressionTree *new_expression_tree() {
     ExpressionTree *tree = malloc(sizeof(ExpressionTree));
 
     if (tree) {
-        tree->root = NULL;
         tree->last = NULL;
+        tree->root = NULL;
     }
 
     return tree;
 }
 
 void free_expression_tree(ExpressionTree *tree) {
+    if (tree->last) {
+        free_expression_node(tree->last);
+        tree->last = NULL;
+    }
     if (tree->root) {
         free_expression_node(tree->root);
+        tree->root = NULL;
     }
 
     free(tree);
@@ -101,15 +106,17 @@ int get_tree_size(ExpressionTree *tree) {
 }
 
 void print_post_order(ExpressionTree *tree, char *buffer) {
-    traverse_tree_post_order(tree->root, &buffer);
+    int pos = 0;
+    traverse_tree_post_order(tree->root, buffer, &pos);
+    buffer[get_tree_size(tree)] = '\0';
 }
 
-void traverse_tree_post_order(ExpressionNode *node, char **buffer) {
+void traverse_tree_post_order(ExpressionNode *node, char *buffer, int *pos) {
     if (node) {
-        traverse_tree_post_order(get_left_node(node), buffer);
-        traverse_tree_post_order(get_right_node(node), buffer);
+        traverse_tree_post_order(get_left_node(node), buffer, pos);
+        traverse_tree_post_order(get_right_node(node), buffer, pos);
 
-        (**buffer) = get_node_value(node);
-        (*buffer)++;
+        buffer[*pos] = get_node_value(node);
+        (*pos)++;
     }
 }

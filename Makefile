@@ -14,7 +14,7 @@ all: clean build_main build_test
 .PHONY : all
 
 mem_test: clean build_main build_test
-	CK_FORK=no valgrind --trace-children=yes --leak-check=full $(BUILD_DIR)/test/test_rpn
+	CK_FORK=no valgrind --trace-children=yes --track-origins=yes --leak-check=full $(BUILD_DIR)/test/test_rpn
 .PHONY : all
 
 

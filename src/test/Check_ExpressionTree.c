@@ -55,7 +55,7 @@ END_TEST
 START_TEST(test_expression_tree_print_post_order_addition)
     {
         const char *expected_rpn = "ab+";
-        char result[3];
+        char result[4];
 
         ExpressionTree *tree = new_expression_tree();
         add_node(tree, 'a');
@@ -73,7 +73,7 @@ END_TEST
 START_TEST(test_expression_tree_print_post_order_subtraction)
     {
         const char *expected_rpn = "ab-";
-        char result[3];
+        char result[4];
 
         ExpressionTree *tree = new_expression_tree();
         add_node(tree, 'a');
@@ -91,7 +91,7 @@ END_TEST
 START_TEST(test_expression_tree_print_post_order_addition_subtraction)
     {
         const char *expected_rpn = "ab-c+";
-        char result[3];
+        char result[6];
 
         ExpressionTree *tree = new_expression_tree();
         add_node(tree, 'a');
@@ -111,7 +111,7 @@ END_TEST
 START_TEST(test_expression_tree_order_of_ops_addition_subtraction)
     {
         const char *expected_rpn = "abc-+";
-        char result[5];
+        char result[6];
 
         ExpressionTree *tree = new_expression_tree();
         add_node(tree, 'a');
@@ -119,6 +119,32 @@ START_TEST(test_expression_tree_order_of_ops_addition_subtraction)
         add_node(tree, 'b');
         add_node(tree, '-');
         add_node(tree, 'c');
+
+        print_post_order(tree, result);
+
+        ck_assert_str_eq(expected_rpn, result);
+
+        free_expression_tree(tree);
+    }
+END_TEST
+
+START_TEST(test_expression_tree_order_of_ops_addition_subtraction_complicated)
+    {
+        const char *expected_rpn = "ab-cd-+e+f+";
+        char result[12];
+
+        ExpressionTree *tree = new_expression_tree();
+        add_node(tree, 'a');
+        add_node(tree, '-');
+        add_node(tree, 'b');
+        add_node(tree, '+');
+        add_node(tree, 'c');
+        add_node(tree, '-');
+        add_node(tree, 'd');
+        add_node(tree, '+');
+        add_node(tree, 'e');
+        add_node(tree, '+');
+        add_node(tree, 'f');
 
         print_post_order(tree, result);
 
@@ -144,6 +170,7 @@ Suite *expression_tree() {
     tcase_add_test(tcase_core, test_expression_tree_print_post_order_subtraction);
     tcase_add_test(tcase_core, test_expression_tree_print_post_order_addition_subtraction);
     tcase_add_test(tcase_core, test_expression_tree_order_of_ops_addition_subtraction);
+    tcase_add_test(tcase_core, test_expression_tree_order_of_ops_addition_subtraction_complicated);
 
     suite_add_tcase(suite, tcase_core);
 

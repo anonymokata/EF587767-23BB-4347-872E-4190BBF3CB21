@@ -4,8 +4,8 @@
 #include "ExpressionTree.h"
 
 struct ExpressionTree {
-    ExpressionNode *last;
     ExpressionNode *root;
+    ExpressionNode *last;
 };
 
 NodeType calculate_node_type(const char i);
@@ -20,21 +20,20 @@ ExpressionTree *new_expression_tree() {
     ExpressionTree *tree = malloc(sizeof(ExpressionTree));
 
     if (tree) {
-        tree->last = NULL;
         tree->root = NULL;
+        tree->last = NULL;
     }
 
     return tree;
 }
 
 void free_expression_tree(ExpressionTree *tree) {
-    if (tree->last) {
-        free_expression_node(tree->last);
-        tree->last = NULL;
-    }
     if (tree->root) {
         free_expression_node(tree->root);
         tree->root = NULL;
+    } else if (tree->last) {
+        free_expression_node(tree->last);
+        tree->last = NULL;
     }
 
     free(tree);

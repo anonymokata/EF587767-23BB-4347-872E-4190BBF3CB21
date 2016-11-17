@@ -1,7 +1,4 @@
 BUILD_DIR = build
-CURRENT_DIR = $(shell basename $(CURDIR))
-IMAGE_NAME = rpn-kata
-CONTAINER_NAME = ubuntu-c
 
 
 default: all

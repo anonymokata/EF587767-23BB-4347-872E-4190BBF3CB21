@@ -7,8 +7,8 @@ START_TEST(test_converts_infix_addition_1)
     {
         char result[3];
 
-        const char expected_rpn[] = "ab+";
-        const char infix[] = "a+b";
+        const char *expected_rpn = "ab+";
+        const char *infix = "a+b";
 
         convert_to_rpn(infix, result, 3);
 
@@ -20,8 +20,8 @@ START_TEST(test_converts_infix_addition_2)
     {
         char result[5];
 
-        const char expected_rpn[] = "cb+f+";
-        const char infix[] = "c+b+f";
+        const char *expected_rpn = "cb+f+";
+        const char *infix = "c+b+f";
 
         convert_to_rpn(infix, result, 5);
 

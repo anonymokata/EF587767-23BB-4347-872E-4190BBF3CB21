@@ -55,7 +55,9 @@ END_TEST
 
 START_TEST(test_expression_tree_print_post_order_1)
     {
+        const char *expected_rpn = "ab+";
         char result[3];
+
         ExpressionTree *tree = new_expression_tree();
         add_node(tree, 'a');
         add_node(tree, '+');
@@ -63,7 +65,7 @@ START_TEST(test_expression_tree_print_post_order_1)
 
         print_post_order(tree, result);
 
-        ck_assert_str_eq("ab+", result);
+        ck_assert_str_eq(expected_rpn, result);
 
         free_expression_tree(tree);
     }

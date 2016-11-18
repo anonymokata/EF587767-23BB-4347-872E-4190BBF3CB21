@@ -8,6 +8,7 @@ int main() {
     SRunner *srunner = srunner_create(suite);
 
     srunner_add_suite(srunner, expression_node());
+    srunner_add_suite(srunner, expression_stack());
     srunner_add_suite(srunner, expression_tree());
 
     srunner_run_all(srunner, CK_NORMAL);

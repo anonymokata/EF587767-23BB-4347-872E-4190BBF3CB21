@@ -13,6 +13,9 @@ default: build
 $(BUILD_DIR)/test/Check_ExpressionNode.c.o: Check_ExpressionNode.c
 	$(CC) $(C_FLAGS) $(C_INCLUDES) -o $@ -c $^
 
+$(BUILD_DIR)/test/Check_ExpressionStack.c.o: Check_ExpressionStack.c
+	$(CC) $(C_FLAGS) $(C_INCLUDES) -o $@ -c $^
+
 $(BUILD_DIR)/test/Check_ExpressionTree.c.o: Check_ExpressionTree.c
 	$(CC) $(C_FLAGS) $(C_INCLUDES) -o $@ -c $^
 
@@ -23,6 +26,7 @@ $(BUILD_DIR)/test/CheckMain.c.o: CheckMain.c
 	$(CC) $(C_FLAGS) -o $@ -c $^
 
 $(BUILD_DIR)/test/test_rpn: $(BUILD_DIR)/test/Check_ExpressionNode.c.o
+$(BUILD_DIR)/test/test_rpn: $(BUILD_DIR)/test/Check_ExpressionStack.c.o
 $(BUILD_DIR)/test/test_rpn: $(BUILD_DIR)/test/Check_ExpressionTree.c.o
 $(BUILD_DIR)/test/test_rpn: $(BUILD_DIR)/test/Check_NotationConversion.c.o
 $(BUILD_DIR)/test/test_rpn: $(BUILD_DIR)/test/CheckMain.c.o

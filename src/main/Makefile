@@ -11,6 +11,9 @@ default: build
 $(BUILD_DIR)/main/ExpressionNode.c.o: ExpressionNode.c
 	$(CC) $(C_FLAGS) -o $@ -c $^
 
+$(BUILD_DIR)/main/ExpressionStack.c.o: ExpressionStack.c
+	$(CC) $(C_FLAGS) -o $@ -c $^
+
 $(BUILD_DIR)/main/ExpressionTree.c.o: ExpressionTree.c
 	$(CC) $(C_FLAGS) -o $@ -c $^
 
@@ -18,6 +21,7 @@ $(BUILD_DIR)/main/NotationConversion.c.o: NotationConversion.c
 	$(CC) $(C_FLAGS) -o $@ -c $^
 
 $(BUILD_DIR)/main/librpn_calc.a: $(BUILD_DIR)/main/ExpressionNode.c.o
+$(BUILD_DIR)/main/librpn_calc.a: $(BUILD_DIR)/main/ExpressionStack.c.o
 $(BUILD_DIR)/main/librpn_calc.a: $(BUILD_DIR)/main/ExpressionTree.c.o
 $(BUILD_DIR)/main/librpn_calc.a: $(BUILD_DIR)/main/NotationConversion.c.o
 	rm -f $@

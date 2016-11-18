@@ -21,9 +21,9 @@ START_TEST(test_expression_stack_pop_returns_in_reverse_push_order)
         push(stack, 'b');
         push(stack, 'c');
 
-        ck_assert_ptr_eq('c', pop(stack));
-        ck_assert_ptr_eq('b', pop(stack));
-        ck_assert_ptr_eq('a', pop(stack));
+        ck_assert_int_eq('c', pop(stack));
+        ck_assert_int_eq('b', pop(stack));
+        ck_assert_int_eq('a', pop(stack));
 
         free_expression_stack(stack);
     }

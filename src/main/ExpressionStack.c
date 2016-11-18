@@ -28,19 +28,25 @@ void free_expression_stack(ExpressionStack *stack) {
     free(stack);
 }
 
-void push_node(ExpressionStack *stack, ExpressionNode *node) {
+void push(ExpressionStack *stack, char value) {
+    ExpressionNode *node = new_expression_node(value, NO_OP);
+
     set_child_node(node, stack->top);
     stack->top = node;
 }
 
-ExpressionNode *pop_node(ExpressionStack *stack) {
+char pop(ExpressionStack *stack) {
     ExpressionNode *top_child = get_child_node(stack->top);
 
     ExpressionNode *old_top_node = stack->top;
-    set_child_node(old_top_node, NULL);
-
     stack->top = top_child;
-    return old_top_node;
+
+    char value = get_node_value(old_top_node);
+
+    set_child_node(old_top_node, NULL);
+    free_expression_node(old_top_node);
+
+    return value;
 }
 
 void set_child_node(ExpressionNode *parent, ExpressionNode *child) {

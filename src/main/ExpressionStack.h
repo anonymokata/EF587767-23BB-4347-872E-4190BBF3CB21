@@ -9,8 +9,8 @@ ExpressionStack *new_expression_stack();
 
 void free_expression_stack(ExpressionStack *stack);
 
-void push_node(ExpressionStack *stack, ExpressionNode *node);
+void push(ExpressionStack *stack, char value);
 
-ExpressionNode *pop_node(ExpressionStack *stack);
+char pop(ExpressionStack *stack);
 
 #endif

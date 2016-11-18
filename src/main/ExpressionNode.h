@@ -4,7 +4,7 @@
 typedef struct ExpressionNode ExpressionNode;
 
 typedef enum NodeType {
-    VARIABLE, OPERATOR
+    VARIABLE, OPERATOR, NO_OP
 } NodeType;
 
 ExpressionNode *new_expression_node(char value, NodeType type);

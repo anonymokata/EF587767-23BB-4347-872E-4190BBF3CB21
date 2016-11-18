@@ -51,6 +51,19 @@ START_TEST(test_expression_stack_is_empty_returns_false_for_non_empty_stack)
     }
 END_TEST
 
+START_TEST(test_expression_stack_peak_returns_value_of_top)
+    {
+        ExpressionStack *stack = new_expression_stack();
+
+        push(stack, 'a');
+        push(stack, 'b');
+
+        ck_assert_int_eq('b', peak(stack));
+
+        free_expression_stack(stack);
+    }
+END_TEST
+
 
 Suite *expression_stack() {
     Suite *suite;
@@ -64,6 +77,7 @@ Suite *expression_stack() {
     tcase_add_test(tcase_core, test_expression_stack_pop_returns_in_reverse_push_order);
     tcase_add_test(tcase_core, test_expression_stack_is_empty_returns_true_for_empty_stack);
     tcase_add_test(tcase_core, test_expression_stack_is_empty_returns_false_for_non_empty_stack);
+    tcase_add_test(tcase_core, test_expression_stack_peak_returns_value_of_top);
 
     suite_add_tcase(suite, tcase_core);
 

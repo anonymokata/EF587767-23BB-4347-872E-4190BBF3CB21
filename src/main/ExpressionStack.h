@@ -14,6 +14,8 @@ void push(ExpressionStack *stack, char value);
 
 char pop(ExpressionStack *stack);
 
+char peak(ExpressionStack *stack);
+
 bool is_empty(ExpressionStack *stack);
 
 #endif

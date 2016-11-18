@@ -53,6 +53,10 @@ bool is_empty(ExpressionStack *stack) {
     return stack->top == NULL;
 }
 
+char peak(ExpressionStack *stack) {
+    return get_node_value(stack->top);
+}
+
 void set_child_node(ExpressionNode *parent, ExpressionNode *child) {
     set_left_node(parent, child);
 }

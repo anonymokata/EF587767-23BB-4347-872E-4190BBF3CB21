@@ -1,27 +1,27 @@
 #include <stddef.h>
 #include <stdlib.h>
-#include <stdbool.h>
+
 #include "ExpressionTree.h"
 
 struct ExpressionTree {
     ExpressionNode *root;
-    ExpressionNode *last;
+    ExpressionNode *temp;
 };
 
 NodeType calculate_node_type(const char i);
 
 void traverse_tree_post_order(ExpressionNode *node, char *buffer, int *pos);
 
-bool is_new_operator_higher_precedence(ExpressionNode *pNode, ExpressionNode *pExpressionNode);
+void set_root(ExpressionTree *tree, ExpressionNode *new_node);
 
-int operator_precedence(ExpressionNode *node);
+void set_temp(ExpressionTree *tree, ExpressionNode *new_node);
 
 ExpressionTree *new_expression_tree() {
     ExpressionTree *tree = malloc(sizeof(ExpressionTree));
 
     if (tree) {
         tree->root = NULL;
-        tree->last = NULL;
+        tree->temp = NULL;
     }
 
     return tree;
@@ -31,9 +31,9 @@ void free_expression_tree(ExpressionTree *tree) {
     if (tree->root) {
         free_expression_node(tree->root);
         tree->root = NULL;
-    } else if (tree->last) {
-        free_expression_node(tree->last);
-        tree->last = NULL;
+    } else if (tree->temp) {
+        free_expression_node(tree->temp);
+        tree->temp = NULL;
     }
 
     free(tree);
@@ -45,48 +45,39 @@ void add_node(ExpressionTree *tree, const char value) {
 
     if (!tree->root) {
         if (type == OPERATOR) {
-            tree->root = new_node;
-            set_left_node(new_node, tree->last);
+            set_root(tree, new_node);
+            set_right_node(new_node, tree->temp);
+            set_temp(tree, NULL);
+        } else {
+            set_temp(tree, new_node);
         }
-        tree->last = new_node;
         return;
     }
 
     if (type == OPERATOR) {
-        if (is_new_operator_higher_precedence(tree->root, new_node)) {
-            set_left_node(new_node, get_right_node(tree->root));
+        set_left_node(new_node, tree->root);
+        set_right_node(new_node, tree->temp);
+
+        set_root(tree, new_node);
+        set_temp(tree, NULL);
+    } else {
+        if (get_left_node(tree->root) == NULL) {
+            set_left_node(tree->root, new_node);
+        } else if (get_right_node(tree->root) == NULL) {
             set_right_node(tree->root, new_node);
         } else {
-            ExpressionNode *old_root = tree->root;
-            tree->root = new_node;
-            set_left_node(tree->root, old_root);
-        }
-    } else {
-        set_right_node(tree->last, new_node);
-    }
-
-    tree->last = new_node;
-}
-
-bool is_new_operator_higher_precedence(ExpressionNode *root_node, ExpressionNode *new_node) {
-    if (get_node_type(root_node) == OPERATOR && get_node_type(new_node) == OPERATOR) {
-        if (operator_precedence(new_node) > operator_precedence(root_node)) {
-            return true;
+            set_temp(tree, new_node);
         }
     }
-    return false;
+
 }
 
-int operator_precedence(ExpressionNode *node) {
-    const char operator = get_node_value(node);
-    switch (operator) {
-        case '+':
-            return 1;
-        case '-':
-            return 2;
-        default:
-            return 0;
-    }
+void set_root(ExpressionTree *tree, ExpressionNode *new_node) {
+    tree->root = new_node;
+}
+
+void set_temp(ExpressionTree *tree, ExpressionNode *new_node) {
+    tree->temp = new_node;
 }
 
 NodeType calculate_node_type(const char value) {

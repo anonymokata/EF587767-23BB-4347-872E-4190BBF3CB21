@@ -13,9 +13,9 @@ void convert_to_rpn(const char *infix, char *rpn_buffer, size_t buffer_size) {
         add_node(tree, infix[i]);
     }
 
-    print_post_order(tree, result);
+    print_post_order(tree, result, buffer_size + 1);
 
-    strncpy(rpn_buffer, result, buffer_size);
+    strcpy(rpn_buffer, result);
 
     free_expression_tree(tree);
 }

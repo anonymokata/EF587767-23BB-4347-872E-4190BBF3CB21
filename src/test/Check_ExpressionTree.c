@@ -55,14 +55,15 @@ END_TEST
 START_TEST(test_expression_tree_print_post_order_addition)
     {
         const char *expected_rpn = "ab+";
-        char result[4];
+        size_t buffer_size = 4;
+        char result[buffer_size];
 
         ExpressionTree *tree = new_expression_tree();
         add_node(tree, 'a');
         add_node(tree, '+');
         add_node(tree, 'b');
 
-        print_post_order(tree, result);
+        print_post_order(tree, result, buffer_size);
 
         ck_assert_str_eq(expected_rpn, result);
 
@@ -73,14 +74,15 @@ END_TEST
 START_TEST(test_expression_tree_print_post_order_subtraction)
     {
         const char *expected_rpn = "ab-";
-        char result[4];
+        size_t buffer_size = 4;
+        char result[buffer_size];
 
         ExpressionTree *tree = new_expression_tree();
         add_node(tree, 'a');
         add_node(tree, '-');
         add_node(tree, 'b');
 
-        print_post_order(tree, result);
+        print_post_order(tree, result, buffer_size);
 
         ck_assert_str_eq(expected_rpn, result);
 
@@ -91,7 +93,8 @@ END_TEST
 START_TEST(test_expression_tree_print_post_order_addition_subtraction)
     {
         const char *expected_rpn = "ab-c+";
-        char result[6];
+        size_t buffer_size = 6;
+        char result[buffer_size];
 
         ExpressionTree *tree = new_expression_tree();
         add_node(tree, 'a');
@@ -100,7 +103,7 @@ START_TEST(test_expression_tree_print_post_order_addition_subtraction)
         add_node(tree, '+');
         add_node(tree, 'c');
 
-        print_post_order(tree, result);
+        print_post_order(tree, result, buffer_size);
 
         ck_assert_str_eq(expected_rpn, result);
 
@@ -111,7 +114,8 @@ END_TEST
 START_TEST(test_expression_tree_order_of_ops_addition_subtraction)
     {
         const char *expected_rpn = "abc-+";
-        char result[6];
+        size_t buffer_size = 6;
+        char result[buffer_size];
 
         ExpressionTree *tree = new_expression_tree();
         add_node(tree, 'a');
@@ -120,7 +124,7 @@ START_TEST(test_expression_tree_order_of_ops_addition_subtraction)
         add_node(tree, '-');
         add_node(tree, 'c');
 
-        print_post_order(tree, result);
+        print_post_order(tree, result, buffer_size);
 
         ck_assert_str_eq(expected_rpn, result);
 
@@ -131,7 +135,8 @@ END_TEST
 START_TEST(test_expression_tree_order_of_ops_addition_subtraction_complicated)
     {
         const char *expected_rpn = "ab-cd-+e+f+";
-        char result[12];
+        size_t buffer_size = 12;
+        char result[buffer_size];
 
         ExpressionTree *tree = new_expression_tree();
         add_node(tree, 'a');
@@ -146,7 +151,7 @@ START_TEST(test_expression_tree_order_of_ops_addition_subtraction_complicated)
         add_node(tree, '+');
         add_node(tree, 'f');
 
-        print_post_order(tree, result);
+        print_post_order(tree, result, buffer_size);
 
         ck_assert_str_eq(expected_rpn, result);
 

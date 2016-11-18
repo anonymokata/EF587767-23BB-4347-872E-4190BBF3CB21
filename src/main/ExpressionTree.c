@@ -104,10 +104,10 @@ int get_tree_size(ExpressionTree *tree) {
     return get_node_count(tree->root);
 }
 
-void print_post_order(ExpressionTree *tree, char *buffer) {
+void print_post_order(ExpressionTree *tree, char *buffer, size_t buffer_size) {
     int pos = 0;
     traverse_tree_post_order(tree->root, buffer, &pos);
-    buffer[get_tree_size(tree)] = '\0';
+    buffer[buffer_size] = '\0';
 }
 
 void traverse_tree_post_order(ExpressionNode *node, char *buffer, int *pos) {

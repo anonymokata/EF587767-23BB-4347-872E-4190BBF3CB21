@@ -15,16 +15,25 @@ END_TEST
 
 START_TEST(test_expression_stack_pop_returns_in_reverse_push_order)
     {
-        ExpressionNode *node = new_expression_node('a', VARIABLE);
+        ExpressionNode *node1 = new_expression_node('a', VARIABLE);
+        ExpressionNode *node2 = new_expression_node('b', VARIABLE);
+        ExpressionNode *node3 = new_expression_node('c', VARIABLE);
 
         ExpressionStack *stack = new_expression_stack();
 
-        push_node(stack, node);
-        ExpressionNode *popedNode = pop_node(stack);
+        push_node(stack, node1);
+        push_node(stack, node2);
+        push_node(stack, node3);
 
-        ck_assert_ptr_eq(node, popedNode);
+        ck_assert_ptr_eq(node3, pop_node(stack));
+        ck_assert_ptr_eq(node2, pop_node(stack));
+        ck_assert_ptr_eq(node1, pop_node(stack));
 
         free_expression_stack(stack);
+
+        free_expression_node(node1);
+        free_expression_node(node2);
+        free_expression_node(node3);
     }
 END_TEST
 

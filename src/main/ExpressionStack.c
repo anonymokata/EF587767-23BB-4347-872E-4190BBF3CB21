@@ -49,6 +49,10 @@ char pop(ExpressionStack *stack) {
     return value;
 }
 
+bool is_empty(ExpressionStack *stack) {
+    return stack->top == NULL;
+}
+
 void set_child_node(ExpressionNode *parent, ExpressionNode *child) {
     set_left_node(parent, child);
 }

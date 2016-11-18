@@ -6,7 +6,7 @@
 
 typedef struct ExpressionStack ExpressionStack;
 
-ExpressionStack *new_expression_stack();
+ExpressionStack *new_expression_stack(const size_t stack_size);
 
 void free_expression_stack(ExpressionStack *stack);
 

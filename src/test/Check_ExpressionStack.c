@@ -5,7 +5,7 @@
 
 START_TEST(test_expression_stack_create)
     {
-        ExpressionStack *stack = new_expression_stack();
+        ExpressionStack *stack = new_expression_stack(0);
 
         ck_assert_ptr_ne(NULL, stack);
 
@@ -15,7 +15,7 @@ END_TEST
 
 START_TEST(test_expression_stack_pop_returns_in_reverse_push_order)
     {
-        ExpressionStack *stack = new_expression_stack();
+        ExpressionStack *stack = new_expression_stack(3);
 
         push(stack, 'a');
         push(stack, 'b');
@@ -31,7 +31,7 @@ END_TEST
 
 START_TEST(test_expression_stack_is_empty_returns_true_for_empty_stack)
     {
-        ExpressionStack *stack = new_expression_stack();
+        ExpressionStack *stack = new_expression_stack(0);
 
         ck_assert_int_eq(true, is_empty(stack));
 
@@ -41,7 +41,7 @@ END_TEST
 
 START_TEST(test_expression_stack_is_empty_returns_false_for_non_empty_stack)
     {
-        ExpressionStack *stack = new_expression_stack();
+        ExpressionStack *stack = new_expression_stack(1);
 
         push(stack, 'a');
 
@@ -53,7 +53,7 @@ END_TEST
 
 START_TEST(test_expression_stack_peak_returns_value_of_top)
     {
-        ExpressionStack *stack = new_expression_stack();
+        ExpressionStack *stack = new_expression_stack(2);
 
         push(stack, 'a');
         push(stack, 'b');

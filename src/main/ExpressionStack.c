@@ -3,64 +3,41 @@
 
 #include "ExpressionStack.h"
 
+#define EMPTY_POS -1
+
 struct ExpressionStack {
-    ExpressionNode *top;
+    char *stack_buffer;
+    int stack_pos;
 };
 
-void set_child_node(ExpressionNode *parent, ExpressionNode *child);
-
-ExpressionNode *get_child_node(ExpressionNode *parent);
-
-ExpressionStack *new_expression_stack() {
+ExpressionStack *new_expression_stack(const size_t stack_size) {
     ExpressionStack *stack = malloc(sizeof(ExpressionStack));
 
     if (stack) {
-        stack->top = NULL;
+        stack->stack_buffer = malloc(sizeof(char) * stack_size);
+        stack->stack_pos = EMPTY_POS;
     }
 
     return stack;
 }
 
 void free_expression_stack(ExpressionStack *stack) {
-    if (stack->top) {
-        free_expression_node(stack->top);
-    }
+    free(stack->stack_buffer);
     free(stack);
 }
 
 void push(ExpressionStack *stack, char value) {
-    ExpressionNode *node = new_expression_node(value, NO_OP);
-
-    set_child_node(node, stack->top);
-    stack->top = node;
+    stack->stack_buffer[++stack->stack_pos] = value;
 }
 
 char pop(ExpressionStack *stack) {
-    ExpressionNode *top_child = get_child_node(stack->top);
-
-    ExpressionNode *old_top_node = stack->top;
-    stack->top = top_child;
-
-    char value = get_node_value(old_top_node);
-
-    set_child_node(old_top_node, NULL);
-    free_expression_node(old_top_node);
-
-    return value;
+    return stack->stack_buffer[stack->stack_pos--];
 }
 
 bool is_empty(ExpressionStack *stack) {
-    return stack->top == NULL;
+    return stack->stack_pos == EMPTY_POS;
 }
 
 char peak(ExpressionStack *stack) {
-    return get_node_value(stack->top);
-}
-
-void set_child_node(ExpressionNode *parent, ExpressionNode *child) {
-    set_left_node(parent, child);
-}
-
-ExpressionNode *get_child_node(ExpressionNode *parent) {
-    return get_left_node(parent);
+    return stack->stack_buffer[stack->stack_pos];
 }

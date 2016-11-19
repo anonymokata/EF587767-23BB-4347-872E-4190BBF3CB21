@@ -3,39 +3,33 @@
 
 #include "ExpressionTree.h"
 
+#define EMPTY_POS -1
+
 struct ExpressionTree {
-    ExpressionNode *root;
-    ExpressionNode *temp;
+    ExpressionNode **tree_buffer;
+    int tree_pos;
 };
 
 NodeType calculate_node_type(const char i);
 
 void traverse_tree_post_order(ExpressionNode *node, char *buffer, int *pos);
 
-void set_root(ExpressionTree *tree, ExpressionNode *new_node);
-
-void set_temp(ExpressionTree *tree, ExpressionNode *new_node);
-
-ExpressionTree *new_expression_tree() {
+ExpressionTree *new_expression_tree(const size_t tree_size) {
     ExpressionTree *tree = malloc(sizeof(ExpressionTree));
 
     if (tree) {
-        tree->root = NULL;
-        tree->temp = NULL;
+        tree->tree_buffer = malloc(sizeof(ExpressionNode *) * tree_size);
+        tree->tree_pos = EMPTY_POS;
     }
 
     return tree;
 }
 
 void free_expression_tree(ExpressionTree *tree) {
-    if (tree->root) {
-        free_expression_node(tree->root);
-        tree->root = NULL;
-    } else if (tree->temp) {
-        free_expression_node(tree->temp);
-        tree->temp = NULL;
+    if (tree->tree_pos != EMPTY_POS) {
+        free_expression_node(tree->tree_buffer[tree->tree_pos]);
     }
-
+    free(tree->tree_buffer);
     free(tree);
 }
 
@@ -43,41 +37,19 @@ void add_node(ExpressionTree *tree, const char value) {
     NodeType type = calculate_node_type(value);
     ExpressionNode *new_node = new_expression_node(value, type);
 
-    if (!tree->root) {
-        if (type == OPERATOR) {
-            set_root(tree, new_node);
-            set_right_node(new_node, tree->temp);
-            set_temp(tree, NULL);
-        } else {
-            set_temp(tree, new_node);
-        }
-        return;
+    ExpressionNode *right_node = NULL;
+    if (type == OPERATOR && tree->tree_pos != EMPTY_POS) {
+        right_node = tree->tree_buffer[tree->tree_pos--];
     }
 
-    if (type == OPERATOR) {
-        set_left_node(new_node, tree->root);
-        set_right_node(new_node, tree->temp);
-
-        set_root(tree, new_node);
-        set_temp(tree, NULL);
-    } else {
-        if (get_left_node(tree->root) == NULL) {
-            set_left_node(tree->root, new_node);
-        } else if (get_right_node(tree->root) == NULL) {
-            set_right_node(tree->root, new_node);
-        } else {
-            set_temp(tree, new_node);
-        }
+    ExpressionNode *left_node = NULL;
+    if (type == OPERATOR && tree->tree_pos != EMPTY_POS) {
+        left_node = tree->tree_buffer[tree->tree_pos--];
     }
 
-}
-
-void set_root(ExpressionTree *tree, ExpressionNode *new_node) {
-    tree->root = new_node;
-}
-
-void set_temp(ExpressionTree *tree, ExpressionNode *new_node) {
-    tree->temp = new_node;
+    set_right_node(new_node, right_node);
+    set_left_node(new_node, left_node);
+    tree->tree_buffer[++tree->tree_pos] = new_node;
 }
 
 NodeType calculate_node_type(const char value) {
@@ -88,16 +60,12 @@ NodeType calculate_node_type(const char value) {
 }
 
 ExpressionNode *get_root(ExpressionTree *tree) {
-    return tree->root;
-}
-
-int get_tree_size(ExpressionTree *tree) {
-    return get_node_count(tree->root);
+    return tree->tree_buffer[tree->tree_pos];
 }
 
 void print_post_order(ExpressionTree *tree, char *buffer, size_t buffer_size) {
     int pos = 0;
-    traverse_tree_post_order(tree->root, buffer, &pos);
+    traverse_tree_post_order(tree->tree_buffer[tree->tree_pos], buffer, &pos);
     buffer[buffer_size - 1] = '\0';
 }
 

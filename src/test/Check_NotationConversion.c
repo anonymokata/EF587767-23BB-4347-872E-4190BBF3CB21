@@ -36,7 +36,7 @@ START_TEST(test_converts_infix_order_of_operations_add_sub_1)
         size_t buffer_size = 5;
         char result[buffer_size];
 
-        const char *expected_rpn = "bc-a+";
+        const char *expected_rpn = "abc-+";
         const char *infix = "a+b-c";
 
         convert_to_rpn(infix, result, buffer_size);
@@ -59,9 +59,9 @@ START_TEST(test_converts_infix_order_of_operations_add_sub_2)
     }
 END_TEST
 
-/*START_TEST(test_converts_infix_order_of_operations_add_sub_3)
+START_TEST(test_converts_infix_order_of_operations_add_sub_3)
     {
-        size_t buffer_size = 5;
+        size_t buffer_size = 7;
         char result[buffer_size];
 
         const char *expected_rpn = "ab-cd-+";
@@ -71,7 +71,7 @@ END_TEST
 
         ck_assert_str_eq(result, expected_rpn);
     }
-END_TEST*/
+END_TEST
 
 START_TEST(test_converts_infix_order_of_operations_with_parens)
     {
@@ -100,7 +100,7 @@ Suite *notation_conversion() {
     tcase_add_test(tcase_core, test_converts_infix_addition_2);
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_add_sub_1);
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_add_sub_2);
-//    tcase_add_test(tcase_core, test_converts_infix_order_of_operations_add_sub_3);
+    tcase_add_test(tcase_core, test_converts_infix_order_of_operations_add_sub_3);
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_with_parens);
 
     suite_add_tcase(suite, tcase_core);

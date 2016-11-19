@@ -73,13 +73,41 @@ START_TEST(test_converts_infix_order_of_operations_add_sub_3)
     }
 END_TEST
 
-START_TEST(test_converts_infix_order_of_operations_with_parens)
+START_TEST(test_converts_infix_order_of_operations_add_sub_with_parens)
     {
         size_t buffer_size = 5;
         char result[buffer_size];
 
         const char *expected_rpn = "ab+c-";
         const char *infix = "(a+b)-c";
+
+        convert_to_rpn(infix, result, buffer_size);
+
+        ck_assert_str_eq(result, expected_rpn);
+    }
+END_TEST
+
+START_TEST(test_converts_infix_order_of_operations_sub_multi_1)
+    {
+        size_t buffer_size = 5;
+        char result[buffer_size];
+
+        const char *expected_rpn = "abc*-";
+        const char *infix = "a-b*c";
+
+        convert_to_rpn(infix, result, buffer_size);
+
+        ck_assert_str_eq(result, expected_rpn);
+    }
+END_TEST
+
+START_TEST(test_converts_infix_order_of_operations_sub_multi_with_parens)
+    {
+        size_t buffer_size = 5;
+        char result[buffer_size];
+
+        const char *expected_rpn = "ab-c*";
+        const char *infix = "(a-b)*c";
 
         convert_to_rpn(infix, result, buffer_size);
 
@@ -101,7 +129,9 @@ Suite *notation_conversion() {
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_add_sub_1);
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_add_sub_2);
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_add_sub_3);
-    tcase_add_test(tcase_core, test_converts_infix_order_of_operations_with_parens);
+    tcase_add_test(tcase_core, test_converts_infix_order_of_operations_add_sub_with_parens);
+    tcase_add_test(tcase_core, test_converts_infix_order_of_operations_sub_multi_1);
+    tcase_add_test(tcase_core, test_converts_infix_order_of_operations_sub_multi_with_parens);
 
     suite_add_tcase(suite, tcase_core);
 

@@ -69,13 +69,14 @@ void convert_to_rpn(const char *infix, char *rpn_buffer, size_t buffer_size) {
 void convert_to_infix(const char *rpn, char *infix_buffer, size_t buffer_size) {
     char result[buffer_size + 1];
     ExpressionTree *tree = new_expression_tree(buffer_size);
+    ExpressionStack *op_stack = new_expression_stack(buffer_size);
 
     int i;
     for (i = 0; i < strlen(rpn); ++i) {
         char value = rpn[i];
         switch (value) {
             case '+':
-                add_node(tree, value);
+                push(op_stack, value);
                 break;
             default:
                 add_node(tree, value);
@@ -83,11 +84,16 @@ void convert_to_infix(const char *rpn, char *infix_buffer, size_t buffer_size) {
         }
     }
 
+    while (!is_empty(op_stack)) {
+        add_node(tree, pop(op_stack));
+    }
+
     print_in_order(tree, result, buffer_size + 1);
 
     strcpy(infix_buffer, result);
 
     free_expression_tree(tree);
+    free_expression_stack(op_stack);
 }
 
 int compare_precedence(const char new_op, const char existing_op) {

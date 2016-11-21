@@ -14,6 +14,8 @@ NodeType calculate_node_type(const char i);
 
 void traverse_tree_post_order(ExpressionNode *node, char *buffer, int *pos);
 
+void traverse_tree_in_order(ExpressionNode *node, char *buffer, int *pos);
+
 ExpressionTree *new_expression_tree(const size_t tree_size) {
     ExpressionTree *tree = malloc(sizeof(ExpressionTree));
 
@@ -76,5 +78,22 @@ void traverse_tree_post_order(ExpressionNode *node, char *buffer, int *pos) {
 
         buffer[*pos] = get_node_value(node);
         (*pos)++;
+    }
+}
+
+void print_in_order(ExpressionTree *tree, char *buffer, size_t buffer_size) {
+    int pos = 0;
+    traverse_tree_in_order(tree->tree_buffer[tree->tree_pos], buffer, &pos);
+    buffer[buffer_size - 1] = '\0';
+}
+
+void traverse_tree_in_order(ExpressionNode *node, char *buffer, int *pos) {
+    if (node) {
+        traverse_tree_in_order(get_left_node(node), buffer, pos);
+
+        buffer[*pos] = get_node_value(node);
+        (*pos)++;
+
+        traverse_tree_in_order(get_right_node(node), buffer, pos);
     }
 }

@@ -15,4 +15,6 @@ ExpressionNode *get_root(ExpressionTree *tree);
 
 void print_post_order(ExpressionTree *tree, char *buffer, size_t buffer_size);
 
+void print_in_order(ExpressionTree *tree, char *buffer, size_t buffer_size);
+
 #endif

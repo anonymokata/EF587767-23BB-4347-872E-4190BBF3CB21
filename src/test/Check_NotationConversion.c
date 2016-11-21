@@ -171,6 +171,48 @@ START_TEST(test_converts_infix_order_of_operations_div_exp_with_parens)
     }
 END_TEST
 
+START_TEST(test_converts_infix_order_of_operations_all_operators_1)
+    {
+        size_t buffer_size = 11;
+        char result[buffer_size];
+
+        const char *expected_rpn = "lmn^/o*ap-+";
+        const char *infix = "l/m^n*o+a-p";
+
+        convert_to_rpn(infix, result, buffer_size);
+
+        ck_assert_str_eq(result, expected_rpn);
+    }
+END_TEST
+
+START_TEST(test_converts_infix_order_of_operations_all_operators_2)
+    {
+        size_t buffer_size = 11;
+        char result[buffer_size];
+
+        const char *expected_rpn = "lmn^/oa+*p-";
+        const char *infix = "l/m^n*(o+a)-p";
+
+        convert_to_rpn(infix, result, buffer_size);
+
+        ck_assert_str_eq(result, expected_rpn);
+    }
+END_TEST
+
+START_TEST(test_converts_infix_order_of_operations_all_operators_3)
+    {
+        size_t buffer_size = 17;
+        char result[buffer_size];
+
+        const char *expected_rpn = "ag+ba-c+cedf^*+^*";
+        const char *infix = "(a+g)*(b-a+c)^(c+e*d^f)";
+
+        convert_to_rpn(infix, result, buffer_size);
+
+        ck_assert_str_eq(result, expected_rpn);
+    }
+END_TEST
+
 
 Suite *notation_conversion() {
     Suite *suite;
@@ -192,6 +234,9 @@ Suite *notation_conversion() {
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_multi_div_with_parens);
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_div_exp_1);
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_div_exp_with_parens);
+    tcase_add_test(tcase_core, test_converts_infix_order_of_operations_all_operators_1);
+    tcase_add_test(tcase_core, test_converts_infix_order_of_operations_all_operators_2);
+    tcase_add_test(tcase_core, test_converts_infix_order_of_operations_all_operators_3);
 
     suite_add_tcase(suite, tcase_core);
 

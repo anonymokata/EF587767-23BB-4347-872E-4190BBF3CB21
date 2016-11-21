@@ -17,6 +17,20 @@ START_TEST(test_converts_infix_addition_1)
     }
 END_TEST
 
+START_TEST(test_converts_rpn_addition_1)
+    {
+        size_t buffer_size = 3;
+        char result[buffer_size];
+
+        const char *expected_infix = "a+b";
+        const char *rpn = "ab+";
+
+        convert_to_infix(rpn, result, buffer_size);
+
+        ck_assert_str_eq(result, expected_infix);
+    }
+END_TEST
+
 START_TEST(test_converts_infix_addition_2)
     {
         size_t buffer_size = 5;
@@ -223,6 +237,7 @@ Suite *notation_conversion() {
     tcase_core = tcase_create("Core");
 
     tcase_add_test(tcase_core, test_converts_infix_addition_1);
+    tcase_add_test(tcase_core, test_converts_rpn_addition_1);
     tcase_add_test(tcase_core, test_converts_infix_addition_2);
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_add_sub_1);
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_add_sub_2);

@@ -66,6 +66,30 @@ void convert_to_rpn(const char *infix, char *rpn_buffer, size_t buffer_size) {
     free_expression_stack(op_stack);
 }
 
+void convert_to_infix(const char *rpn, char *infix_buffer, size_t buffer_size) {
+    char result[buffer_size + 1];
+    ExpressionTree *tree = new_expression_tree(buffer_size);
+
+    int i;
+    for (i = 0; i < strlen(rpn); ++i) {
+        char value = rpn[i];
+        switch (value) {
+            case '+':
+                add_node(tree, value);
+                break;
+            default:
+                add_node(tree, value);
+                break;
+        }
+    }
+
+    print_in_order(tree, result, buffer_size + 1);
+
+    strcpy(infix_buffer, result);
+
+    free_expression_tree(tree);
+}
+
 int compare_precedence(const char new_op, const char existing_op) {
     if (operator_precedence(new_op) > operator_precedence(existing_op)) {
         return 1;

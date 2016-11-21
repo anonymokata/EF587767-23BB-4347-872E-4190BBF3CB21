@@ -74,18 +74,7 @@ void convert_to_infix(const char *rpn, char *infix_buffer, size_t buffer_size) {
     int i;
     for (i = 0; i < strlen(rpn); ++i) {
         char value = rpn[i];
-        switch (value) {
-            case '+':
-                push(op_stack, value);
-                break;
-            default:
-                add_node(tree, value);
-                break;
-        }
-    }
-
-    while (!is_empty(op_stack)) {
-        add_node(tree, pop(op_stack));
+        add_node(tree, value);
     }
 
     print_in_order(tree, result, buffer_size + 1);

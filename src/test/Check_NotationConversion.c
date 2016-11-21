@@ -73,6 +73,20 @@ START_TEST(test_converts_infix_order_of_operations_add_sub_1)
     }
 END_TEST
 
+START_TEST(test_converts_rpn_order_of_operations_add_sub_1)
+    {
+        size_t buffer_size = 5;
+        char result[buffer_size];
+
+        const char *expected_infix = "a+b-c";
+        const char *rpn = "abc-+";
+
+        convert_to_infix(rpn, result, buffer_size);
+
+        ck_assert_str_eq(result, expected_infix);
+    }
+END_TEST
+
 START_TEST(test_converts_infix_order_of_operations_add_sub_2)
     {
         size_t buffer_size = 5;
@@ -87,6 +101,20 @@ START_TEST(test_converts_infix_order_of_operations_add_sub_2)
     }
 END_TEST
 
+START_TEST(test_converts_rpn_order_of_operations_add_sub_2)
+    {
+        size_t buffer_size = 5;
+        char result[buffer_size];
+
+        const char *expected_infix = "a-b+c";
+        const char *rpn = "ab-c+";
+
+        convert_to_infix(rpn, result, buffer_size);
+
+        ck_assert_str_eq(result, expected_infix);
+    }
+END_TEST
+
 START_TEST(test_converts_infix_order_of_operations_add_sub_3)
     {
         size_t buffer_size = 7;
@@ -98,6 +126,20 @@ START_TEST(test_converts_infix_order_of_operations_add_sub_3)
         convert_to_rpn(infix, result, buffer_size);
 
         ck_assert_str_eq(result, expected_rpn);
+    }
+END_TEST
+
+START_TEST(test_converts_rpn_order_of_operations_add_sub_3)
+    {
+        size_t buffer_size = 7;
+        char result[buffer_size];
+
+        const char *expected_infix = "a-b+c-d";
+        const char *rpn = "ab-cd-+";
+
+        convert_to_infix(rpn, result, buffer_size);
+
+        ck_assert_str_eq(result, expected_infix);
     }
 END_TEST
 
@@ -252,11 +294,19 @@ Suite *notation_conversion() {
 
     tcase_add_test(tcase_core, test_converts_infix_addition_1);
     tcase_add_test(tcase_core, test_converts_rpn_addition_1);
+
     tcase_add_test(tcase_core, test_converts_infix_addition_2);
     tcase_add_test(tcase_core, test_converts_rpn_addition_2);
+
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_add_sub_1);
+    tcase_add_test(tcase_core, test_converts_rpn_order_of_operations_add_sub_1);
+
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_add_sub_2);
+    tcase_add_test(tcase_core, test_converts_rpn_order_of_operations_add_sub_2);
+
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_add_sub_3);
+    tcase_add_test(tcase_core, test_converts_rpn_order_of_operations_add_sub_3);
+
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_add_sub_with_parens);
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_sub_multi_1);
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_sub_multi_with_parens);

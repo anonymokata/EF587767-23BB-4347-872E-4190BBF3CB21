@@ -13,7 +13,6 @@ void convert_to_rpn(const char *infix, char *rpn_buffer, size_t buffer_size) {
     char result[buffer_size + 1];
     ExpressionTree *tree = new_expression_tree(buffer_size);
     ExpressionStack *op_stack = new_expression_stack(buffer_size);
-    ExpressionStack *var_stack = new_expression_stack(buffer_size);
 
     int i;
     for (i = 0; i < strlen(infix); ++i) {
@@ -38,6 +37,7 @@ void convert_to_rpn(const char *infix, char *rpn_buffer, size_t buffer_size) {
             case '-':
             case '*':
             case '/':
+            case '^':
                 while (!is_empty(op_stack) && peak(op_stack) != '(') {
                     if (compare_precedence(value, peak(op_stack)) <= 0) {
                         add_node(tree, pop(op_stack));
@@ -53,6 +53,7 @@ void convert_to_rpn(const char *infix, char *rpn_buffer, size_t buffer_size) {
                 break;
         }
     }
+
     while (!is_empty(op_stack)) {
         add_node(tree, pop(op_stack));
     }
@@ -63,7 +64,6 @@ void convert_to_rpn(const char *infix, char *rpn_buffer, size_t buffer_size) {
 
     free_expression_tree(tree);
     free_expression_stack(op_stack);
-    free_expression_stack(var_stack);
 }
 
 int compare_precedence(const char new_op, const char existing_op) {
@@ -85,6 +85,8 @@ int operator_precedence(const char op) {
             return 3;
         case '/':
             return 4;
+        case '^':
+            return 5;
         default:
             return 0;
     }

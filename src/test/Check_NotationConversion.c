@@ -120,8 +120,8 @@ START_TEST(test_converts_infix_order_of_operations_multi_div_1)
         size_t buffer_size = 5;
         char result[buffer_size];
 
-        const char *expected_rpn = "abc*-";
-        const char *infix = "a-b*c";
+        const char *expected_rpn = "abc/*";
+        const char *infix = "a*b/c";
 
         convert_to_rpn(infix, result, buffer_size);
 
@@ -136,6 +136,34 @@ START_TEST(test_converts_infix_order_of_operations_multi_div_with_parens)
 
         const char *expected_rpn = "ab*c/";
         const char *infix = "(a*b)/c";
+
+        convert_to_rpn(infix, result, buffer_size);
+
+        ck_assert_str_eq(result, expected_rpn);
+    }
+END_TEST
+
+START_TEST(test_converts_infix_order_of_operations_div_exp_1)
+    {
+        size_t buffer_size = 5;
+        char result[buffer_size];
+
+        const char *expected_rpn = "abc/*";
+        const char *infix = "a*b/c";
+
+        convert_to_rpn(infix, result, buffer_size);
+
+        ck_assert_str_eq(result, expected_rpn);
+    }
+END_TEST
+
+START_TEST(test_converts_infix_order_of_operations_div_exp_with_parens)
+    {
+        size_t buffer_size = 5;
+        char result[buffer_size];
+
+        const char *expected_rpn = "ab/c^";
+        const char *infix = "(a/b)^c";
 
         convert_to_rpn(infix, result, buffer_size);
 
@@ -162,6 +190,8 @@ Suite *notation_conversion() {
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_sub_multi_with_parens);
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_multi_div_1);
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_multi_div_with_parens);
+    tcase_add_test(tcase_core, test_converts_infix_order_of_operations_div_exp_1);
+    tcase_add_test(tcase_core, test_converts_infix_order_of_operations_div_exp_with_parens);
 
     suite_add_tcase(suite, tcase_core);
 

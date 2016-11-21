@@ -37,6 +37,7 @@ void convert_to_rpn(const char *infix, char *rpn_buffer, size_t buffer_size) {
             case '+':
             case '-':
             case '*':
+            case '/':
                 while (!is_empty(op_stack) && peak(op_stack) != '(') {
                     if (compare_precedence(value, peak(op_stack)) <= 0) {
                         add_node(tree, pop(op_stack));
@@ -82,6 +83,8 @@ int operator_precedence(const char op) {
             return 2;
         case '*':
             return 3;
+        case '/':
+            return 4;
         default:
             return 0;
     }

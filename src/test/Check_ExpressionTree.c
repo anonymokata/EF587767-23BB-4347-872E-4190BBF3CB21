@@ -163,6 +163,27 @@ START_TEST(test_expression_tree_print_post_order_subtraction_multiplication)
     }
 END_TEST
 
+START_TEST(test_expression_tree_print_post_order_multiplication_division)
+    {
+        const char *expected_rpn = "ab/c*";
+        size_t buffer_size = 6;
+        char result[buffer_size];
+
+        ExpressionTree *tree = new_expression_tree(buffer_size - 1);
+        add_node(tree, 'a');
+        add_node(tree, 'b');
+        add_node(tree, '/');
+        add_node(tree, 'c');
+        add_node(tree, '*');
+
+        print_post_order(tree, result, buffer_size);
+
+        ck_assert_str_eq(expected_rpn, result);
+
+        free_expression_tree(tree);
+    }
+END_TEST
+
 Suite *expression_tree() {
     Suite *suite;
     TCase *tcase_core;
@@ -179,6 +200,7 @@ Suite *expression_tree() {
     tcase_add_test(tcase_core, test_expression_tree_order_of_insertion_addition_subtraction);
     tcase_add_test(tcase_core, test_expression_tree_order_of_ops_addition_subtraction_complicated);
     tcase_add_test(tcase_core, test_expression_tree_print_post_order_subtraction_multiplication);
+    tcase_add_test(tcase_core, test_expression_tree_print_post_order_multiplication_division);
 
     suite_add_tcase(suite, tcase_core);
 

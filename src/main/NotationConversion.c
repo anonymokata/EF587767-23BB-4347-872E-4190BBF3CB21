@@ -5,8 +5,6 @@
 #include "ExpressionTree.h"
 #include "NotationConversion.h"
 
-int compare_precedence(const char op1, const char existing_op);
-
 int operator_precedence(const char op);
 
 void convert_to_rpn(const char *infix, char *rpn_buffer, size_t buffer_size) {

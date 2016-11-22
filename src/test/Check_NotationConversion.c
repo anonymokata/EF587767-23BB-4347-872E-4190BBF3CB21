@@ -269,6 +269,20 @@ START_TEST(test_converts_infix_order_of_operations_all_operators_1)
     }
 END_TEST
 
+START_TEST(test_converts_rpn_order_of_operations_all_operators_1)
+    {
+        size_t buffer_size = 11;
+        char result[buffer_size];
+
+        const char *expected_infix = "l/m^n*o+a-p";
+        const char *rpn = "lmn^/o*ap-+";
+
+        convert_to_infix(rpn, result, buffer_size);
+
+        ck_assert_str_eq(result, expected_infix);
+    }
+END_TEST
+
 START_TEST(test_converts_infix_order_of_operations_all_operators_2)
     {
         size_t buffer_size = 11;
@@ -283,6 +297,20 @@ START_TEST(test_converts_infix_order_of_operations_all_operators_2)
     }
 END_TEST
 
+START_TEST(test_converts_rpn_order_of_operations_all_operators_2)
+    {
+        size_t buffer_size = 13;
+        char result[buffer_size];
+
+        const char *expected_infix = "l/m^n*(o+a)-p";
+        const char *rpn = "lmn^/oa+*p-";
+
+        convert_to_infix(rpn, result, buffer_size);
+
+        ck_assert_str_eq(result, expected_infix);
+    }
+END_TEST
+
 START_TEST(test_converts_infix_order_of_operations_all_operators_3)
     {
         size_t buffer_size = 17;
@@ -294,6 +322,20 @@ START_TEST(test_converts_infix_order_of_operations_all_operators_3)
         convert_to_rpn(infix, result, buffer_size);
 
         ck_assert_str_eq(result, expected_rpn);
+    }
+END_TEST
+
+START_TEST(test_converts_rpn_order_of_operations_all_operators_3)
+    {
+        size_t buffer_size = 23;
+        char result[buffer_size];
+
+        const char *expected_infix = "(a+g)*(b-a+c)^(c+e*d^f)";
+        const char *rpn = "ag+ba-c+cedf^*+^*";
+
+        convert_to_infix(rpn, result, buffer_size);
+
+        ck_assert_str_eq(result, expected_infix);
     }
 END_TEST
 
@@ -410,9 +452,15 @@ Suite *notation_conversion() {
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_multi_div_with_parens);
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_div_exp_1);
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_div_exp_with_parens);
+
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_all_operators_1);
+    tcase_add_test(tcase_core, test_converts_rpn_order_of_operations_all_operators_1);
+
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_all_operators_2);
+    tcase_add_test(tcase_core, test_converts_rpn_order_of_operations_all_operators_2);
+
     tcase_add_test(tcase_core, test_converts_infix_order_of_operations_all_operators_3);
+    tcase_add_test(tcase_core, test_converts_rpn_order_of_operations_all_operators_3);
 
     tcase_add_test(tcase_core, test_compare_precedence_addition_and_addition);
     tcase_add_test(tcase_core, test_compare_precedence_addition_and_subtraction);

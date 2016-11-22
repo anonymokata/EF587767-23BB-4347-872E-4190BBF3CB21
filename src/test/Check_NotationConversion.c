@@ -301,6 +301,24 @@ START_TEST(test_compare_precedence_addition_and_subtraction)
     }
 END_TEST
 
+START_TEST(test_compare_precedence_subtraction_and_subtraction)
+    {
+        char subtraction_op = '-';
+
+        ck_assert_int_eq(0, compare_precedence(subtraction_op, subtraction_op));
+    }
+END_TEST
+
+START_TEST(test_compare_precedence_subtraction_and_multiplication)
+    {
+        char subtraction_op = '-';
+        char multiplication_op = '*';
+
+        ck_assert_int_eq(-1, compare_precedence(subtraction_op, multiplication_op));
+        ck_assert_int_eq(1, compare_precedence(multiplication_op, subtraction_op));
+    }
+END_TEST
+
 
 Suite *notation_conversion() {
     Suite *suite;
@@ -338,6 +356,9 @@ Suite *notation_conversion() {
 
     tcase_add_test(tcase_core, test_compare_precedence_addition_and_addition);
     tcase_add_test(tcase_core, test_compare_precedence_addition_and_subtraction);
+
+    tcase_add_test(tcase_core, test_compare_precedence_subtraction_and_subtraction);
+    tcase_add_test(tcase_core, test_compare_precedence_subtraction_and_multiplication);
 
     suite_add_tcase(suite, tcase_core);
 

@@ -337,6 +337,32 @@ START_TEST(test_compare_precedence_multiplication_and_division)
     }
 END_TEST
 
+START_TEST(test_compare_precedence_division_and_division)
+    {
+        char division_op = '/';
+
+        ck_assert_int_eq(0, compare_precedence(division_op, division_op));
+    }
+END_TEST
+
+START_TEST(test_compare_precedence_division_and_exponent)
+    {
+        char division_op = '/';
+        char exponent_op = '^';
+
+        ck_assert_int_eq(-1, compare_precedence(division_op, exponent_op));
+        ck_assert_int_eq(1, compare_precedence(exponent_op, division_op));
+    }
+END_TEST
+
+START_TEST(test_compare_precedence_exponent_and_exponent)
+    {
+        char exponent_op = '^';
+
+        ck_assert_int_eq(0, compare_precedence(exponent_op, exponent_op));
+    }
+END_TEST
+
 
 Suite *notation_conversion() {
     Suite *suite;
@@ -380,6 +406,11 @@ Suite *notation_conversion() {
 
     tcase_add_test(tcase_core, test_compare_precedence_multiplication_and_multiplication);
     tcase_add_test(tcase_core, test_compare_precedence_multiplication_and_division);
+
+    tcase_add_test(tcase_core, test_compare_precedence_division_and_division);
+    tcase_add_test(tcase_core, test_compare_precedence_division_and_exponent);
+
+    tcase_add_test(tcase_core, test_compare_precedence_exponent_and_exponent);
 
     suite_add_tcase(suite, tcase_core);
 

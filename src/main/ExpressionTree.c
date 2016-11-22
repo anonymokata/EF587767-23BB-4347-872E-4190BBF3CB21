@@ -1,6 +1,8 @@
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
+#include "NotationConversion.h"
 #include "ExpressionTree.h"
 
 #define EMPTY_POS -1
@@ -89,7 +91,21 @@ void print_in_order(ExpressionTree *tree, char *buffer, size_t buffer_size) {
 
 void traverse_tree_in_order(ExpressionNode *node, char *buffer, int *pos) {
     if (node) {
-        traverse_tree_in_order(get_left_node(node), buffer, pos);
+        ExpressionNode *left_node = get_left_node(node);
+
+        bool needs_parentheses = false;
+        if (left_node && get_node_type(left_node) == OPERATOR) {
+            if (compare_precedence(get_node_value(node), get_node_value(left_node)) == 1) {
+                needs_parentheses = true;
+                buffer[*pos] = '(';
+                (*pos)++;
+            }
+        }
+        traverse_tree_in_order(left_node, buffer, pos);
+        if (needs_parentheses) {
+            buffer[*pos] = ')';
+            (*pos)++;
+        }
 
         buffer[*pos] = get_node_value(node);
         (*pos)++;

@@ -18,6 +18,8 @@ void traverse_tree_post_order(ExpressionNode *node, char *buffer, int *pos);
 
 void traverse_tree_in_order(ExpressionNode *node, char *buffer, int *pos);
 
+void print_child_node(ExpressionNode *node, char *buffer, int *pos, ExpressionNode *child_node);
+
 ExpressionTree *new_expression_tree(const size_t tree_size) {
     ExpressionTree *tree = malloc(sizeof(ExpressionTree));
 
@@ -90,34 +92,28 @@ void print_in_order(ExpressionTree *tree, char *buffer, size_t buffer_size) {
 
 void traverse_tree_in_order(ExpressionNode *node, char *buffer, int *pos) {
     if (node) {
-        ExpressionNode *left_node = get_left_node(node);
-
-        bool needs_parentheses = false;
-        if (left_node && get_node_type(left_node) == OPERATOR) {
-            if (compare_precedence(get_node_value(node), get_node_value(left_node)) == 1) {
-                needs_parentheses = true;
-                buffer[(*pos)++] = '(';
-            }
-        }
-        traverse_tree_in_order(left_node, buffer, pos);
-        if (needs_parentheses) {
-            buffer[(*pos)++] = ')';
-        }
+        print_child_node(node, buffer, pos, get_left_node(node));
 
         buffer[(*pos)++] = get_node_value(node);
 
-        ExpressionNode *right_node = get_right_node(node);
+        print_child_node(node, buffer, pos, get_right_node(node));
+    }
+}
 
-        needs_parentheses = false;
-        if (right_node && get_node_type(right_node) == OPERATOR) {
-            if (compare_precedence(get_node_value(node), get_node_value(right_node)) == 1) {
-                needs_parentheses = true;
-                buffer[(*pos)++] = '(';
-            }
+void print_child_node(ExpressionNode *node, char *buffer, int *pos, ExpressionNode *child_node) {
+    bool needs_parentheses = false;
+
+    if (child_node && get_node_type(child_node) == OPERATOR) {
+        if (compare_precedence(get_node_value(node), get_node_value(child_node)) == 1) {
+            needs_parentheses = true;
         }
-        traverse_tree_in_order(right_node, buffer, pos);
-        if (needs_parentheses) {
-            buffer[(*pos)++] = ')';
-        }
+    }
+
+    if (needs_parentheses) {
+        buffer[(*pos)++] = '(';
+    }
+    traverse_tree_in_order(child_node, buffer, pos);
+    if (needs_parentheses) {
+        buffer[(*pos)++] = ')';
     }
 }

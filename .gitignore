@@ -42,7 +42,7 @@ CTestTestfile.cmake
 *.dSYM/
 *.su
 
-build/test/test_rpn
+build/
 
 
 ### JetBrains template

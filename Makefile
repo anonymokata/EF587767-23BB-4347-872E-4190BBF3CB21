@@ -26,6 +26,7 @@ build_test:
 
 
 clean:
+	mkdir -p $(BUILD_DIR)
 	$(MAKE) -C src/main clean
 	$(MAKE) -C src/test clean
 .PHONY : clean

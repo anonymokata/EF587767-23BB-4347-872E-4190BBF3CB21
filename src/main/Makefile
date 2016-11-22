@@ -35,4 +35,5 @@ build: $(BUILD_DIR)/main/librpn_calc.a
 clean:
 	rm -rf $(BUILD_DIR)/main/*.o
 	rm -rf $(BUILD_DIR)/main/*.a
+	mkdir -p $(BUILD_DIR)/main
 .PHONY : clean

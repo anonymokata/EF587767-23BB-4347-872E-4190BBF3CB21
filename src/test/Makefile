@@ -40,4 +40,5 @@ build: $(BUILD_DIR)/test/test_rpn
 clean:
 	rm -rf $(BUILD_DIR)/test/*.o
 	rm -rf $(BUILD_DIR)/test/test_rpn*
+	mkdir -p $(BUILD_DIR)/test
 .PHONY : clean

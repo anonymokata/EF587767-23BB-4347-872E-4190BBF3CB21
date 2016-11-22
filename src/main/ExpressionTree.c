@@ -106,6 +106,18 @@ void traverse_tree_in_order(ExpressionNode *node, char *buffer, int *pos) {
 
         buffer[(*pos)++] = get_node_value(node);
 
-        traverse_tree_in_order(get_right_node(node), buffer, pos);
+        ExpressionNode *right_node = get_right_node(node);
+
+        needs_parentheses = false;
+        if (right_node && get_node_type(right_node) == OPERATOR) {
+            if (compare_precedence(get_node_value(node), get_node_value(right_node)) == 1) {
+                needs_parentheses = true;
+                buffer[(*pos)++] = '(';
+            }
+        }
+        traverse_tree_in_order(right_node, buffer, pos);
+        if (needs_parentheses) {
+            buffer[(*pos)++] = ')';
+        }
     }
 }

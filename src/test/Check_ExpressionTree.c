@@ -199,6 +199,27 @@ START_TEST(test_expression_tree_print_in_order_addition_subtraction_2)
     }
 END_TEST
 
+START_TEST(test_expression_tree_print_in_order_addition_subtraction_3)
+    {
+        const char *expected_infix = "c-(a+b)";
+        size_t buffer_size = 8;
+        char result[buffer_size];
+
+        ExpressionTree *tree = new_expression_tree(buffer_size - 1);
+        add_node(tree, 'c');
+        add_node(tree, 'a');
+        add_node(tree, 'b');
+        add_node(tree, '+');
+        add_node(tree, '-');
+
+        print_in_order(tree, result, buffer_size);
+
+        ck_assert_str_eq(expected_infix, result);
+
+        free_expression_tree(tree);
+    }
+END_TEST
+
 START_TEST(test_expression_tree_order_of_ops_addition_subtraction_complicated)
     {
         const char *expected_rpn = "ab-cd-+";
@@ -393,6 +414,7 @@ Suite *expression_tree() {
 
     tcase_add_test(tcase_core, test_expression_tree_print_post_order_addition_subtraction_2);
     tcase_add_test(tcase_core, test_expression_tree_print_in_order_addition_subtraction_2);
+    tcase_add_test(tcase_core, test_expression_tree_print_in_order_addition_subtraction_3);
 
     tcase_add_test(tcase_core, test_expression_tree_order_of_ops_addition_subtraction_complicated);
     tcase_add_test(tcase_core, test_expression_tree_print_in_order_addition_subtraction_complicated);
